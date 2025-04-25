@@ -12,4 +12,21 @@ test:
   database: myapp_api_test
 
 production:
-  url: <%= ENV["DATABASE_URL"] %>
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+
+  cache:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>?database=myapp_api_production_cache
+    migrations_paths: db/cache_migrate
+
+  queue:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>?database=myapp_api_production_queue
+    migrations_paths: db/queue_migrate
+
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>?database=myapp_api_production_cable
+    migrations_paths: db/cable_migrate
